@@ -7,7 +7,7 @@ Automates pfsense OpenVPN user creation, which includes:
 """
 
 import os
-from os.path import join
+from os.path import join, exists
 import getpass
 from http.cookiejar import LWPCookieJar
 import string
@@ -83,6 +83,13 @@ next_incr_user = user_prefix + str(max_incr_user_n + 1)
 user = input('new username (default={}): '.format(next_incr_user))
 if len(user) == 0:
     user = next_incr_user
+else:
+    if user in existing_users:
+        raise ValueError('user {} already exists'.format(user))
+
+export_dir = 'hongvpn_{}'.format(user)
+if exists(export_dir):
+    raise IOError('export dir {} already exists'.format(export_dir))
 
 passw = getpass.getpass(prompt='password (default=random):')
 if len(passw) == 0:
@@ -125,7 +132,6 @@ export_url = ('http://gateway'
     '-pass%20hong_vpn_user_and_pass.txt'
 ).format(user_id)
 
-export_dir = 'hongvpn_{}'.format(user)
 print('exporting config to {}'.format(export_dir))
 print('copy the files it contains to /etc/openvpn on the client computer')
 os.mkdir(export_dir)

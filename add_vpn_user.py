@@ -135,7 +135,7 @@ export_url = ('http://gateway'
 print('exporting config to {}'.format(export_dir))
 print('copy the files it contains to /etc/openvpn on the client computer')
 os.mkdir(export_dir)
-br.retrieve(export_url, filename=join(export_dir, 'hongvpn.conf')
+br.retrieve(export_url, filename=join(export_dir, 'hongvpn.conf'))
 
 with open(join(export_dir, 'hong_vpn_user_and_pass.txt'), 'w') as f:
     f.write(user + '\n')

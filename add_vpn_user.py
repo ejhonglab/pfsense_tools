@@ -12,7 +12,8 @@ import getpass
 from http.cookiejar import LWPCookieJar
 import string
 import secrets
-import sys, logging
+import sys
+import logging
 
 import mechanize
 from bs4 import BeautifulSoup
@@ -123,6 +124,9 @@ for line in lines:
         break
 assert user_id is not None
 
+# TODO make the extra options toggleable w/ flag (whose name indicates what
+# systems these flags are for, namely 16.04 and 18.04 [i think...])
+# (so this is also useful for export for other users)
 export_url = ('http://gateway'
     '/vpn_openvpn_export.php?act=confinline&srvid=1&usrid={}&crtid=0'
     '&useaddr=serveraddr&verifyservercn=auto&blockoutsidedns=0&legacy=1'
